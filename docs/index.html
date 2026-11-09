@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}a{color:var(--accent)}</style>
+<title>Moving Up a Weight Class</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Public+Sans:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: single reading column (~68ch) with wider figure blocks; a scoreboard-style verdict strip up top. */
+:root{
+  --bg:#f5f6f8; --surface:#ffffff; --fg:#16191f; --muted:#5b6372; --rule:#d9dde4;
+  --accent:#2a5ba6; --accent-soft:rgba(42,91,166,.16); --down:#c0622a; --warn:#b4541a; --zero:#9aa1ad;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12151b; --surface:#1a1e26; --fg:#e6e9ef; --muted:#9aa3b2; --rule:#2c323d;
+  --accent:#7fa8ec; --accent-soft:rgba(127,168,236,.2); --down:#eba06e; --warn:#e8945f; --zero:#5d6574; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12151b; --surface:#1a1e26; --fg:#e6e9ef; --muted:#9aa3b2; --rule:#2c323d;
+  --accent:#7fa8ec; --accent-soft:rgba(127,168,236,.2); --down:#eba06e; --warn:#e8945f; --zero:#5d6574; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:40px 64px}
+.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:44px}
+.prose{max-width:68ch}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.05;letter-spacing:.01em}
+h1{font-size:clamp(2.4rem,6vw,3.6rem);font-weight:700;text-transform:uppercase}
+h2{font-size:1.75rem;font-weight:600;text-transform:uppercase;margin-bottom:12px}
+h3{font-size:1.2rem;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+p{margin:0 0 12px} p:last-child{margin-bottom:0}
+.eyebrow{font:500 .75rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.lede{font-size:1.125rem;color:var(--fg);max-width:62ch;margin-top:16px}
+.muted{color:var(--muted)}
+code,.mono{font-family:var(--mono);font-size:.86em}
+.board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--rule);background:var(--surface);border-radius:6px;overflow:hidden}
+.board div{padding:16px 18px;border-right:1px solid var(--rule);min-width:0}
+.board div:last-child{border-right:0}
+.board .k{font:500 .7rem/1.2 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.board .v{font:600 2rem/1.1 var(--display);margin-top:6px;font-variant-numeric:tabular-nums}
+.board .s{font-size:.8rem;color:var(--muted)}
+@media (max-width:640px){.board{grid-template-columns:repeat(2,minmax(0,1fr))}.board div:nth-child(2){border-right:0}.board div:nth-child(-n+2){border-bottom:1px solid var(--rule)}}
+figure{margin:0;display:flex;flex-direction:column;gap:8px;min-width:0}
+figcaption{font-size:.85rem;color:var(--muted);max-width:68ch}
+.chart{width:100%;height:auto;display:block;overflow:visible}
+.chart text{fill:var(--muted);font:12px var(--mono)}
+.chart .title{fill:var(--fg);font:600 15px var(--display);letter-spacing:.04em;text-transform:uppercase}
+.grid4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 28px}
+@media (max-width:640px){.grid4{grid-template-columns:1fr}}
+.tablewrap{overflow-x:auto;border:1px solid var(--rule);border-radius:6px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.88rem;font-variant-numeric:tabular-nums}
+th,td{padding:8px 12px;text-align:right;border-bottom:1px solid var(--rule);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{font:500 .7rem/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--bg)}
+tr:last-child td{border-bottom:0}
+tr.group td{font:600 .8rem var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--bg);text-align:left}
+td.forest{width:150px;padding:4px 10px}
+.flag{color:var(--warn);font-weight:600}
+.fixes{display:flex;flex-direction:column;gap:18px;max-width:72ch}
+.fix{display:grid;grid-template-columns:2.2rem minmax(0,1fr);gap:4px 14px}
+.fix .n{font:700 1.6rem/1 var(--display);color:var(--accent)}
+.fix h3{margin-bottom:4px}
+ul{margin:0;padding-left:1.2em} li{margin-bottom:6px}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font:500 .75rem var(--mono);color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.files{font-family:var(--mono);font-size:.84rem;line-height:1.9}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="eyebrow">Staggered DiD · BJJ Heroes match records · 2010–2023</div>
+  <h1>Moving up a weight class</h1>
+  <p class="lede">Does changing weight class change how often BJJ competitors finish opponents, or get finished themselves? A rebuild of last spring's project with cleaned weight data, a Callaway &amp; Sant'Anna estimator, and competitors who moved up compared against those who moved down. Finishing opponents rises after any change of class, and rises more for movers down, mostly through chokes. Getting finished shows no clear direction effect, except that getting caught in leg locks rises after a change of class in either direction.</p>
+</header>
+
+<section class="board" aria-label="Headline numbers">
+  <div><div class="k">Finishing: direction effect</div><div class="v" id="b-ww"></div><div class="s" id="b-ww-s"></div></div>
+  <div><div class="k">Got finished: direction effect</div><div class="v" id="b-lw"></div><div class="s" id="b-lw-s"></div></div>
+  <div><div class="k">Baseline rates</div><div class="v" id="b-base"></div><div class="s">finish / got finished, of decided matches</div></div>
+  <div><div class="k">Fighters</div><div class="v">86 / 51 / 233</div><div class="s">moved up / moved down / never moved</div></div>
+</section>
+
+<section class="prose">
+  <h2>What the data say</h2>
+  <p>Every match is from one competitor's point of view, so a submission ending is either a <strong>win by submission</strong> (they finished the opponent) or a <strong>loss by submission</strong> (they got finished). Before moving, about <span id="t-wbase"></span> of a competitor's decided weight-class matches are submission wins and <span id="t-lbase"></span> are submission losses. These are BJJ Heroes profiles of notable competitors, so wins outnumber losses.</p>
+  <p>Each effect below is split into two parts. The <strong>direction effect</strong> is half the gap between movers up and movers down: the part that depends on which way the competitor moved. The <strong>common shift</strong> is the average of the two: the part that comes with changing class at all. Both groups are compared with the same competitors who haven't moved, using one shared bootstrap.</p>
+  <p><strong>Finishing opponents.</strong> Movers down finish 11.0 points more often after the move, movers up 2.7. That's a common shift of <span id="t-wc"></span> and a direction effect of <span id="t-ww"></span>, consistent with being the relatively bigger competitor making finishes easier. The gap is mostly chokes: movers down finish 7.9 points more by choke, a direction effect of <span id="t-cw"></span>. One caution: even counting only matches at their old weight, movers down were already finishing more in the year before they moved (about +16 points, based on 11 competitors).</p>
+  <p><strong>Getting finished.</strong> No clear effect either way. Movers up get finished 1.4 points more, movers down 2.3 points less: a direction effect of <span id="t-lw"></span>, in the direction you'd expect but not distinguishable from zero. The exception is leg locks. Both groups get caught in leg locks more after changing class, a common shift of <span id="t-ll"></span> on a base of about 2%. Finishing with leg locks rises too, though less clearly. Together these point to competitors entering more leg-lock-friendly events (no-gi or submission-only) around a change of class.</p>
+</section>
+
+<section class="grid4" aria-label="Event studies">
+  <figure>
+    <svg class="chart" id="es-win" viewBox="0 0 520 330" role="img" aria-label="Event study, finishing opponents, movers up and down"></svg>
+    <figcaption id="cap-win"></figcaption>
+  </figure>
+  <figure>
+    <svg class="chart" id="es-loss" viewBox="0 0 520 330" role="img" aria-label="Event study, getting finished, movers up and down"></svg>
+    <figcaption id="cap-loss"></figcaption>
+  </figure>
+</section>
+<div class="legend" style="margin-top:-28px"><span><i style="background:var(--accent)"></i>moved up (n=86)</span><span><i style="background:var(--down)"></i>moved down (n=51)</span><span>Points left of the dashed line are placebo checks against the last clean before-move year (usually the year before the move, which has no point of its own). Bars are 95% intervals; labels give movers per point (up / down).</span></div>
+
+<section>
+  <h2>Finishing opponents</h2>
+  <div class="legend"><span><i style="background:var(--accent)"></i>moved up</span><span><i style="background:var(--down)"></i>moved down</span></div>
+  <div class="tablewrap" style="margin-top:10px"><table id="t-win"><thead><tr><th>Submission won with</th><th>Baseline</th><th>Up vs down, ±16pp</th><th>Moved up</th><th>Moved down</th><th>Direction effect</th><th>Common shift</th><th>Placebo</th></tr></thead><tbody></tbody></table></div>
+</section>
+
+<section>
+  <h2>Getting finished</h2>
+  <div class="legend"><span><i style="background:var(--accent)"></i>moved up</span><span><i style="background:var(--down)"></i>moved down</span></div>
+  <div class="tablewrap" style="margin-top:10px"><table id="t-loss"><thead><tr><th>Submission lost to</th><th>Baseline</th><th>Up vs down, ±16pp</th><th>Moved up</th><th>Moved down</th><th>Direction effect</th><th>Common shift</th><th>Placebo</th></tr></thead><tbody></tbody></table></div>
+  <p class="muted" style="margin-top:10px;font-size:.85rem">Both tables: percentage points with 95% intervals. Rates are shares of a competitor's decided weight-class matches, so specific submissions count all decided matches as the denominator. Baseline is the before-move rate. Direction effect = (up − down) / 2; common shift = (up + down) / 2. Bold marks an interval that excludes zero. <span class="flag">Placebo fails</span> means that group's average placebo difference excludes zero, so treat that row's estimate for it with suspicion. With 24 outcomes, one or two intervals will exclude zero by chance alone.</p>
+</section>
+
+<section>
+  <h2>Placebo checks</h2>
+  <div class="prose">
+    <p>Placebo checks ask whether movers were already drifting away from non-movers before they moved. The first version failed too many: 16 of 70 points excluded zero, where chance would give about 3–4. Most movers had already fought some matches at their new weight in the years before the move, which leaked after-move behaviour into the "before" side. Four changes, applied to the placebo checks:</p>
+    <ul>
+      <li><strong>Only matches at the usual weight.</strong> Placebo outcomes count only matches within 2kg of a competitor's typical weight (their before-move median for movers). A year counts if at least 3 such matches remain. The same filter applies to the comparison competitors. This keeps 236 of 260 before-move years and two-thirds of their matches.</li>
+      <li><strong>Compared with the last clean year.</strong> Each before-move year is compared with the competitor's last usable before-move year, so the years don't need to be consecutive.</li>
+      <li><strong>Match-count weighting.</strong> A change between two 20-match seasons counts far more than one between two 5-match seasons. This applies to the after-move estimates too.</li>
+      <li><strong>At least 4 movers per point.</strong> Points resting on fewer are dropped.</li>
+    </ul>
+    <p>Movers down can now be placebo-tested (15 competitors). For getting finished, the checks fail about as often as chance would predict. For finishing opponents they fail about twice as often, mostly because of the movers-down rise in the year before the move.</p>
+  </div>
+  <div class="tablewrap" style="margin-top:14px"><table id="plac"><thead><tr><th>Placebo comparison</th><th>Finishing: points failing</th><th>Got finished: points failing</th><th>Averages failing (finishing / got finished)</th></tr></thead><tbody></tbody></table></div>
+  <p class="muted" style="margin-top:10px;font-size:.85rem">All rows use the 2kg match filter. A point fails when its 95% interval excludes zero; about 5% fail by chance. Averages failing counts outcome-and-group combinations (24 per side) whose average placebo difference excludes zero.</p>
+</section>
+
+<section>
+  <h2>Expanding the sample</h2>
+  <div class="prose">
+    <p>The first version used only competitors who changed class exactly once, compared against competitors who never moved. Two changes add data:</p>
+    <ul>
+      <li><strong>First moves of multi-movers.</strong> A competitor who changed class more than once counts for their first move, if the new class held into the next year. Their later years are dropped. This adds 33 movers up and 23 movers down. Another 135 competitors still don't qualify, mostly because of one-season trips into another division.</li>
+      <li><strong>Not-yet-movers as controls.</strong> Competitors who move later also serve as comparisons before their own move. This barely changes anything, because the 233 never-movers dominate the comparison group.</li>
+    </ul>
+  </div>
+  <div class="tablewrap" style="margin-top:14px"><table id="specs"><thead><tr><th>Version</th><th>Up / down</th><th>Finishing: direction</th><th>Finishing: common</th><th>Choke wins: direction</th><th>Got finished: direction</th><th>Leg-lock losses: common</th></tr></thead><tbody></tbody></table></div>
+  <p class="muted" style="margin-top:10px;font-size:.85rem">Percentage points with 95% intervals; bold excludes zero. "Both" is the version used everywhere else on this page.</p>
+</section>
+
+<section>
+  <h2>What was broken, and the fix</h2>
+  <div class="fixes">
+    <div class="fix"><div class="n">1</div><div><h3>Federation labels looked like weight changes</h3>
+      <p>Weight labels come from different rulebooks: AJP −85kg, IBJJF −82.3/−88.3kg, ADCC −88kg, AJP −56kg vs IBJJF −57.5kg. Under a fixed label-to-class mapping, many competitors seemed to move up just by entering an IBJJF event after an AJP one. The fix: use each competitor's median labelled weight per year, and count a move only when it shifts by at least 5kg (one real class step) and stays there. Wobble of up to 4kg counts as the same class.</p></div></div>
+    <div class="fix"><div class="n">2</div><div><h3>"Changed exactly once" failed on noise</h3>
+      <p>Under the strict rule, half of all competitors bounced between classes, often because of a single match in one year. Years with fewer than 3 weight-class matches are now dropped (2.5% of matches), and open-class (absolute) matches are excluded, since they have no weight class. Competitors who moved more than once count for their first move.</p></div></div>
+    <div class="fix"><div class="n">3</div><div><h3>Two-way fixed effects mixes up the comparisons</h3>
+      <p>A standard fighter-plus-year fixed-effects regression with staggered timing uses already-moved competitors as controls for later movers. That can bias the estimate. The rebuild estimates each cohort-by-year effect separately against competitors who haven't moved yet, then averages them weighted by cohort size.</p></div></div>
+    <div class="fix"><div class="n">4</div><div><h3>Gaps in competitors' careers</h3>
+      <p>Competitors skip years, so the panel has holes. Each comparison uses only competitors observed in both of its years. Individual comparisons were recalculated by hand from the panel; those checks now run as automated tests, and the estimator reproduces the R <span class="mono">did</span> package exactly on a balanced panel.</p></div></div>
+    <div class="fix"><div class="n">5</div><div><h3>After-move matches leaked into the placebo checks</h3>
+      <p>Movers often fight some matches at their new weight before their typical weight changes. Placebo checks now count only matches at the usual weight. See the placebo section above.</p></div></div>
+  </div>
+</section>
+
+<section class="prose">
+  <h2>Robustness</h2>
+  <p>The common shift in finishing opponents is positive at every threshold and clear in 4 of 5. The direction effect on finishing is negative everywhere but at least two standard errors from zero in only 3 of 5, two of them just barely. The choke-win direction effect behaves the same way. The leg-lock-losses common shift is clear in 4 of 5, all but the 2-match setting. The direction effect on getting finished is never clear.</p>
+  <div class="tablewrap"><table id="rob"><thead><tr><th>Min matches / yr</th><th>Step / wobble (kg)</th><th>Up / down / never</th><th>Finishing: direction</th><th>Finishing: common</th><th>Got finished: direction</th><th>Leg-lock losses: common</th></tr></thead><tbody></tbody></table></div>
+  <p class="muted" style="margin-top:10px;font-size:.85rem">Percentage points, with standard errors in brackets (999 bootstrap draws). Bold: at least 1.96 standard errors from zero, the cutoff behind the 95% intervals elsewhere.</p>
+</section>
+
+<section class="prose">
+  <h2>Limits to keep in mind</h2>
+  <ul>
+    <li><strong>The data are sparse.</strong> With 86 movers up and 51 down, only effects of several points can be detected for finishing. Submission losses are rare (under 8% of matches, under 2% for any single submission), so loss estimates for specific submissions are very imprecise.</li>
+    <li><strong>Changing class isn't random.</strong> Competitors change class as they mature, gain or cut weight, or chase specific brackets. Comparing changes rather than levels removes fixed differences between competitors, but not trends that line up with the move.</li>
+    <li><strong>Movers down were on an upswing just before moving.</strong> At their old weight, their finishing rate rose about 16 points in the year before the move (11 competitors), mostly in chokes. If that rise would have continued anyway, the finishing gap overstates the direction effect. If it was a hot season settling back, the gap understates it. The data can't tell which.</li>
+    <li><strong>The up/down split assumes the same career effect for both groups.</strong> Movers down started heavier and may be cutting for specific events. If their career shift differs from the movers-up group's, part of it ends up in the direction effect.</li>
+    <li><strong>The after-move estimates use the year before the move as their starting point.</strong> That year can include some matches at the new weight. Only the placebo checks filter them out.</li>
+    <li><strong>Gi and no-gi are mixed.</strong> The data don't record gi vs. no-gi, and leg-lock rules differ by ruleset. The leg-lock results may reflect a change in events entered rather than anything about the new division.</li>
+    <li><strong>Most moves are recent.</strong> 30 of 86 movers up moved in 2021–23, and 2023 holds only early-season events.</li>
+    <li><strong>The data are BJJ Heroes profiles.</strong> They cover notable competitors and record their own matches, so wins outnumber losses and lesser-known competitors are underrepresented.</li>
+  </ul>
+</section>
+
+<section class="prose">
+  <h2>Code and reproducibility</h2>
+  <p>Everything on this page is produced by the code in this project's repository. Run <span class="mono">python3 bjj_staggered_did.py data.csv results</span> for the main analysis and <span class="mono">python3 -m pytest</span> for the 60 tests. Every analysis choice is a named setting in <span class="mono">bjj_did/config.py</span>. The match data isn't redistributed; it comes from <a href="https://github.com/rdreese89/Web-Scraper">rdreese89/Web-Scraper</a>, which scraped it from BJJ Heroes.</p>
+  <div class="files">bjj_staggered_did.py · runs the full analysis<br>bjj_did/ · config, cleaning, sample, estimation, plots, pipeline<br>robustness.py · compare_specs.py · placebo_compare.py · sensitivity checks<br>tests/ · cleaning rules, trajectories, simulated known effects, hand checks, match with R<br>r_validation/ · comparison with the R did package<br>results/ · every estimate behind this page</div>
+</section>
+</div>
+
+<script>
+const D = {"res": {"Any submission": {"up": [0.0411, -0.0244, 0.0931, 0.0294, -0.0404, 0.097, 0.3883], "down": [0.0867, 0.0186, 0.1582, -0.0666, -0.199, 0.0538, 0.383], "c": [-0.0228, -0.0662, 0.0183, 0.0639, 0.0162, 0.1113]}, "Submission win (finished opponent)": {"up": [0.0268, -0.0227, 0.0688, 0.0294, -0.0396, 0.093, 0.3117], "down": [0.1101, 0.0474, 0.1906, -0.089, -0.2105, 0.0124, 0.3021], "c": [-0.0417, -0.0854, -0.0067, 0.0684, 0.0269, 0.1128]}, "Submission loss (got finished)": {"up": [0.0143, -0.0188, 0.0478, -0.0, -0.0384, 0.0339, 0.0766], "down": [-0.0234, -0.1045, 0.025, 0.0224, -0.0394, 0.0669, 0.081], "c": [0.0189, -0.0101, 0.0608, -0.0046, -0.0495, 0.0264]}, "Win family: Choke": {"up": [0.009, -0.0382, 0.0532, -0.0162, -0.086, 0.0509, 0.1667], "down": [0.0792, 0.0313, 0.1283, -0.0425, -0.1188, 0.0243, 0.1594], "c": [-0.0351, -0.068, -0.0054, 0.0441, 0.0083, 0.082]}, "Win family: Arm lock": {"up": [-0.005, -0.0413, 0.0255, 0.0293, -0.0084, 0.0673, 0.0624], "down": [0.0156, -0.0284, 0.0645, 0.0195, -0.0533, 0.0733, 0.0609], "c": [-0.0103, -0.0405, 0.016, 0.0053, -0.0232, 0.035]}, "Win family: Leg lock": {"up": [0.0112, -0.0187, 0.0398, 0.013, -0.0329, 0.0543, 0.0649], "down": [0.0182, -0.0108, 0.0487, -0.0488, -0.0991, -0.0061, 0.0637], "c": [-0.0035, -0.0231, 0.0152, 0.0147, -0.006, 0.038]}, "Win specific: Rear naked choke": {"up": [0.0139, -0.0132, 0.0362, 0.0262, -0.0199, 0.0704, 0.0784], "down": [0.0202, -0.0126, 0.0524, -0.0107, -0.0754, 0.0494, 0.0766], "c": [-0.0031, -0.0221, 0.0149, 0.017, -0.0065, 0.0371]}, "Win specific: Armbar": {"up": [-0.003, -0.0309, 0.02, 0.0147, -0.0242, 0.0507, 0.0419], "down": [0.0044, -0.0366, 0.0495, 0.0026, -0.0641, 0.0392, 0.0408], "c": [-0.0037, -0.0304, 0.0201, 0.0007, -0.0236, 0.0272]}, "Win specific: Triangle": {"up": [-0.0176, -0.0464, 0.0089, -0.0011, -0.024, 0.0287, 0.0248], "down": [0.0159, 0.0025, 0.0301, -0.0199, -0.0634, 0.0135, 0.022], "c": [-0.0168, -0.0316, -0.0036, -0.0009, -0.0167, 0.0156]}, "Win specific: Guillotine": {"up": [0.0027, -0.0068, 0.011, -0.0034, -0.0126, 0.0025, 0.0059], "down": [0.002, -0.0073, 0.0117, -0.0018, -0.0044, 0.0003, 0.0053], "c": [0.0004, -0.0064, 0.0065, 0.0024, -0.0045, 0.0093]}, "Win specific: Heel hook": {"up": [-0.0057, -0.0187, 0.0067, 0.0092, -0.0287, 0.0467, 0.0219], "down": [0.0017, -0.0073, 0.0099, 0.0024, -0.004, 0.0111, 0.0201], "c": [-0.0037, -0.0104, 0.0028, -0.002, -0.0109, 0.0063]}, "Win specific: Kneebar": {"up": [0.0096, 0.0009, 0.0195, 0.0139, -0.0039, 0.0324, 0.0108], "down": [-0.0058, -0.0296, 0.0142, -0.0047, -0.0113, 0.0009, 0.0105], "c": [0.0077, -0.0031, 0.02, 0.0019, -0.0116, 0.0145]}, "Win specific: Toe hold": {"up": [0.009, -0.0021, 0.0201, 0.0055, -0.0073, 0.0165, 0.0102], "down": [0.0085, -0.0023, 0.0189, -0.0177, -0.0524, 0.0119, 0.0105], "c": [0.0002, -0.007, 0.0075, 0.0087, 0.0008, 0.0163]}, "Win specific: Straight ankle lock": {"up": [0.0004, -0.0156, 0.0165, -0.0147, -0.0372, 0.0049, 0.02], "down": [0.0115, -0.0044, 0.0291, -0.0286, -0.0556, -0.0025, 0.0207], "c": [-0.0056, -0.0151, 0.0036, 0.006, -0.0074, 0.0197]}, "Loss family: Choke": {"up": [0.0024, -0.0216, 0.0246, -0.0068, -0.037, 0.0207, 0.0401], "down": [-0.0109, -0.0433, 0.0151, 0.0227, -0.0039, 0.0428, 0.041], "c": [0.0067, -0.0111, 0.0255, -0.0043, -0.0247, 0.0141]}, "Loss family: Arm lock": {"up": [-0.0008, -0.0227, 0.0155, 0.0131, -0.0026, 0.0295, 0.0161], "down": [-0.0274, -0.1036, 0.0114, -0.0063, -0.0377, 0.019, 0.017], "c": [0.0133, -0.01, 0.0523, -0.0141, -0.0569, 0.0082]}, "Loss family: Leg lock": {"up": [0.0107, -0.0014, 0.0235, -0.0074, -0.0234, 0.0053, 0.0182], "down": [0.0158, 0.005, 0.0278, 0.0165, -0.0223, 0.0769, 0.0203], "c": [-0.0025, -0.0106, 0.0049, 0.0133, 0.0046, 0.0227]}, "Loss specific: Rear naked choke": {"up": [0.0037, -0.017, 0.0214, 0.0023, -0.0251, 0.0248, 0.0195], "down": [-0.002, -0.0241, 0.0147, 0.0152, 0.0015, 0.0282, 0.0199], "c": [0.0029, -0.0101, 0.0164, 0.0009, -0.0161, 0.0141]}, "Loss specific: Armbar": {"up": [0.0001, -0.0208, 0.0143, 0.0157, 0.0047, 0.0271, 0.0121], "down": [-0.0127, -0.0533, 0.0122, -0.0069, -0.0332, 0.0097, 0.0127], "c": [0.0064, -0.01, 0.0273, -0.0063, -0.0297, 0.0088]}, "Loss specific: Triangle": {"up": [0.0022, -0.0044, 0.008, -0.0025, -0.0123, 0.0042, 0.0049], "down": [-0.0005, -0.0139, 0.0104, 0.0011, -0.0057, 0.0105, 0.0049], "c": [0.0014, -0.0049, 0.0084, 0.0009, -0.007, 0.0074]}, "Loss specific: Guillotine": {"up": [0.0024, -0.0012, 0.0063, 0.0034, -0.0008, 0.0094, 0.0019], "down": [-0.0032, -0.0144, 0.0058, 0.0048, -0.0013, 0.0126, 0.0022], "c": [0.0028, -0.0021, 0.0088, -0.0004, -0.006, 0.0046]}, "Loss specific: Heel hook": {"up": [-0.0, -0.0052, 0.0044, -0.006, -0.0166, 0.0013, 0.0047], "down": [0.002, -0.002, 0.0071, -0.0002, -0.0041, 0.0038, 0.0048], "c": [-0.001, -0.0043, 0.0018, 0.001, -0.0026, 0.0046]}, "Loss specific: Kneebar": {"up": [0.0035, -0.0031, 0.0094, -0.0082, -0.0185, -0.0007, 0.0044], "down": [0.0056, -0.0014, 0.0123, 0.002, -0.0044, 0.0115, 0.0051], "c": [-0.001, -0.0053, 0.0033, 0.0046, -0.0006, 0.0093]}, "Loss specific: Toe hold": {"up": [0.0006, -0.0039, 0.0048, 0.0027, -0.0025, 0.0081, 0.0027], "down": [0.0031, -0.0021, 0.0088, 0.0004, -0.0026, 0.0034, 0.003], "c": [-0.0012, -0.0047, 0.0017, 0.0018, -0.0018, 0.0057]}, "Loss specific: Straight ankle lock": {"up": [0.0057, 0.0012, 0.0117, 0.0044, -0.0008, 0.0105, 0.0055], "down": [0.0046, -0.0023, 0.0125, 0.0156, -0.0222, 0.077, 0.0065], "c": [0.0005, -0.0039, 0.0049, 0.0051, 0.0007, 0.0102]}}, "event": {"Any submission|down": [[-4.0, -0.0131, -0.3272, 0.3972, 4.0], [-3.0, 0.0543, -0.1477, 0.2027, 8.0], [-2.0, -0.174, -0.2939, -0.0707, 11.0], [0.0, 0.0766, 0.0088, 0.1532, 46.0], [1.0, 0.0727, -0.012, 0.1644, 32.0], [2.0, 0.1321, 0.029, 0.2335, 19.0], [3.0, 0.0623, -0.0842, 0.2099, 11.0]], "Any submission|up": [[-4.0, 0.0784, -0.0356, 0.1934, 15.0], [-3.0, 0.1097, 0.0397, 0.1833, 26.0], [-2.0, -0.0585, -0.1749, 0.0468, 29.0], [0.0, 0.0262, -0.0315, 0.0821, 74.0], [1.0, 0.0628, -0.0148, 0.1215, 51.0], [2.0, 0.0226, -0.0909, 0.1128, 30.0], [3.0, 0.0581, -0.0802, 0.2245, 16.0]], "Loss family: Arm lock|down": [[-4.0, 0.0283, -0.0252, 0.1075, 4.0], [-3.0, -0.0248, -0.0899, 0.0154, 8.0], [-2.0, -0.0054, -0.0405, 0.0172, 11.0], [0.0, -0.008, -0.0489, 0.0195, 46.0], [1.0, -0.0291, -0.0962, 0.0163, 32.0], [2.0, -0.024, -0.1077, 0.0184, 19.0], [3.0, -0.0508, -0.2063, 0.0178, 11.0]], "Loss family: Arm lock|up": [[-4.0, 0.0095, -0.0054, 0.0285, 15.0], [-3.0, 0.031, 0.0085, 0.0603, 26.0], [-2.0, -0.0035, -0.025, 0.0193, 29.0], [0.0, 0.0004, -0.019, 0.0167, 74.0], [1.0, 0.0013, -0.0229, 0.0239, 51.0], [2.0, -0.007, -0.0508, 0.0211, 30.0], [3.0, -0.0001, -0.0476, 0.0455, 16.0]], "Loss family: Choke|down": [[-4.0, 0.0226, -0.0083, 0.0613, 4.0], [-3.0, 0.0338, -0.0048, 0.0745, 8.0], [-2.0, 0.0147, -0.0136, 0.0369, 11.0], [0.0, -0.0178, -0.0478, 0.0096, 46.0], [1.0, -0.0054, -0.0511, 0.0353, 32.0], [2.0, -0.0396, -0.0855, -0.0022, 19.0], [3.0, -0.0278, -0.0854, 0.0274, 11.0]], "Loss family: Choke|up": [[-4.0, -0.0159, -0.08, 0.0516, 15.0], [-3.0, -0.0031, -0.0372, 0.0307, 26.0], [-2.0, -0.008, -0.0489, 0.0337, 29.0], [0.0, 0.0178, -0.008, 0.0446, 74.0], [1.0, -0.0125, -0.0419, 0.0187, 51.0], [2.0, -0.0005, -0.0387, 0.039, 30.0], [3.0, 0.0078, -0.0515, 0.0675, 16.0]], "Loss family: Leg lock|down": [[-4.0, -0.0081, -0.1097, 0.0905, 4.0], [-3.0, 0.06, -0.017, 0.1995, 8.0], [-2.0, -0.0062, -0.0322, 0.02, 11.0], [0.0, 0.0196, 0.0018, 0.0366, 46.0], [1.0, 0.0202, 0.0017, 0.0429, 32.0], [2.0, 0.0065, -0.0077, 0.0284, 19.0], [3.0, 0.002, -0.0141, 0.0204, 11.0]], "Loss family: Leg lock|up": [[-4.0, -0.0026, -0.0121, 0.0063, 15.0], [-3.0, -0.0008, -0.0216, 0.0153, 26.0], [-2.0, -0.0169, -0.0425, 0.0047, 29.0], [0.0, 0.0104, -0.0024, 0.0229, 74.0], [1.0, 0.0087, -0.0079, 0.0252, 51.0], [2.0, 0.0133, -0.008, 0.041, 30.0], [3.0, 0.0164, -0.0163, 0.0688, 16.0]], "Loss specific: Armbar|down": [[-4.0, 0.0002, -0.0233, 0.0224, 4.0], [-3.0, -0.0264, -0.0905, 0.0107, 8.0], [-2.0, 0.0047, -0.0068, 0.0159, 11.0], [0.0, 0.0001, -0.027, 0.0211, 46.0], [1.0, -0.02, -0.0682, 0.0173, 32.0], [2.0, -0.007, -0.0475, 0.017, 19.0], [3.0, -0.0215, -0.0979, 0.0211, 11.0]], "Loss specific: Armbar|up": [[-4.0, 0.0084, -0.0066, 0.0267, 15.0], [-3.0, 0.0307, 0.0079, 0.0597, 26.0], [-2.0, 0.004, -0.0033, 0.0118, 29.0], [0.0, -0.002, -0.0197, 0.0105, 74.0], [1.0, 0.001, -0.0217, 0.0229, 51.0], [2.0, -0.0003, -0.0466, 0.0279, 30.0], [3.0, 0.0007, -0.0409, 0.0404, 16.0]], "Loss specific: Guillotine|down": [[-4.0, -0.0013, -0.0065, 0.0006, 4.0], [-3.0, 0.0153, -0.0002, 0.0415, 8.0], [-2.0, -0.0005, -0.0024, 0.0012, 11.0], [0.0, -0.0011, -0.0104, 0.0084, 46.0], [1.0, 0.0004, -0.0133, 0.0126, 32.0], [2.0, -0.0104, -0.0274, 0.0012, 19.0], [3.0, -0.0164, -0.0414, 0.0039, 11.0]], "Loss specific: Guillotine|up": [[-4.0, 0.0002, -0.0021, 0.0027, 15.0], [-3.0, 0.0009, -0.0005, 0.0028, 26.0], [-2.0, 0.0079, -0.0017, 0.0232, 29.0], [0.0, 0.0005, -0.0026, 0.0035, 74.0], [1.0, -0.0016, -0.0054, 0.0014, 51.0], [2.0, 0.0134, 0.0008, 0.0345, 30.0], [3.0, 0.004, -0.0024, 0.0103, 16.0]], "Loss specific: Heel hook|down": [[-4.0, 0.0019, -0.0071, 0.0128, 4.0], [-3.0, -0.0022, -0.0089, 0.0043, 8.0], [-2.0, 0.0004, -0.0031, 0.0039, 11.0], [0.0, 0.0058, -0.0004, 0.0136, 46.0], [1.0, 0.0013, -0.0054, 0.0092, 32.0], [2.0, -0.0015, -0.0069, 0.003, 19.0], [3.0, 0.0008, -0.0093, 0.0129, 11.0]], "Loss specific: Heel hook|up": [[-4.0, 0.0001, -0.0036, 0.0043, 15.0], [-3.0, -0.0065, -0.0208, 0.0015, 26.0], [-2.0, -0.0101, -0.0261, 0.0014, 29.0], [0.0, 0.0019, -0.0059, 0.0094, 74.0], [1.0, -0.0025, -0.0094, 0.0022, 51.0], [2.0, 0.0048, -0.0032, 0.0143, 30.0], [3.0, -0.0052, -0.0145, 0.0019, 16.0]], "Loss specific: Kneebar|down": [[-4.0, 0.0217, -0.0079, 0.0909, 4.0], [-3.0, -0.0013, -0.0077, 0.0037, 8.0], [-2.0, -0.0029, -0.0069, 0.0002, 11.0], [0.0, 0.0056, -0.0048, 0.0165, 46.0], [1.0, -0.0015, -0.0112, 0.0033, 32.0], [2.0, 0.0034, -0.0011, 0.0084, 19.0], [3.0, 0.0059, -0.0022, 0.019, 11.0]], "Loss specific: Kneebar|up": [[-4.0, -0.0038, -0.0094, 0.0007, 15.0], [-3.0, -0.01, -0.0244, 0.0002, 26.0], [-2.0, -0.01, -0.0219, -0.0008, 29.0], [0.0, 0.0019, -0.0047, 0.01, 74.0], [1.0, 0.007, -0.0037, 0.0195, 51.0], [2.0, -0.0019, -0.0114, 0.0048, 30.0], [3.0, 0.0104, -0.0064, 0.0295, 16.0]], "Loss specific: Rear naked choke|down": [[-4.0, 0.023, 0.0015, 0.0568, 4.0], [-3.0, 0.0114, -0.0158, 0.0442, 8.0], [-2.0, 0.0152, -0.0006, 0.0339, 11.0], [0.0, -0.0026, -0.0246, 0.0145, 46.0], [1.0, -0.0047, -0.0303, 0.0167, 32.0], [2.0, -0.0184, -0.0549, 0.0109, 19.0], [3.0, -0.0109, -0.0617, 0.0326, 11.0]], "Loss specific: Rear naked choke|up": [[-4.0, -0.0161, -0.0742, 0.0297, 15.0], [-3.0, 0.0052, -0.0229, 0.0303, 26.0], [-2.0, 0.0068, -0.0224, 0.0411, 29.0], [0.0, 0.0185, -0.0055, 0.0412, 74.0], [1.0, -0.0075, -0.0332, 0.0129, 51.0], [2.0, -0.0083, -0.0371, 0.0159, 30.0], [3.0, 0.0108, -0.0217, 0.0448, 16.0]], "Loss specific: Straight ankle lock|down": [[-4.0, -0.0306, -0.1183, 0.008, 4.0], [-3.0, 0.0655, -0.0069, 0.2029, 8.0], [-2.0, -0.0039, -0.0299, 0.0214, 11.0], [0.0, 0.0076, -0.0031, 0.0188, 46.0], [1.0, 0.0086, -0.0015, 0.0238, 32.0], [2.0, 0.0026, -0.0085, 0.0215, 19.0], [3.0, -0.0047, -0.0159, 0.0046, 11.0]], "Loss specific: Straight ankle lock|up": [[-4.0, 0.0023, -0.0029, 0.0079, 15.0], [-3.0, 0.0106, -0.0011, 0.0278, 26.0], [-2.0, 0.0006, -0.0035, 0.0042, 29.0], [0.0, 0.0047, 0.0011, 0.0093, 74.0], [1.0, 0.0018, -0.0023, 0.0074, 51.0], [2.0, 0.0122, -0.001, 0.0345, 30.0], [3.0, 0.0069, -0.0059, 0.0319, 16.0]], "Loss specific: Toe hold|down": [[-4.0, -0.0012, -0.007, 0.0041, 4.0], [-3.0, 0.0003, -0.0043, 0.0046, 8.0], [-2.0, 0.001, -0.0018, 0.0046, 11.0], [0.0, 0.0002, -0.0095, 0.0064, 46.0], [1.0, 0.0109, 0.0012, 0.0257, 32.0], [2.0, 0.0019, -0.004, 0.0098, 19.0], [3.0, -0.0013, -0.0063, 0.0033, 11.0]], "Loss specific: Toe hold|up": [[-4.0, -0.0015, -0.008, 0.0032, 15.0], [-3.0, 0.0052, -0.0038, 0.0157, 26.0], [-2.0, 0.0028, -0.0021, 0.0118, 29.0], [0.0, 0.0023, -0.0017, 0.0069, 74.0], [1.0, 0.0012, -0.0045, 0.008, 51.0], [2.0, -0.0021, -0.0085, 0.0036, 30.0], [3.0, -0.0043, -0.0145, 0.0022, 16.0]], "Loss specific: Triangle|down": [[-4.0, -0.0003, -0.0045, 0.0034, 4.0], [-3.0, -0.0007, -0.01, 0.0067, 8.0], [-2.0, 0.0029, -0.0066, 0.0208, 11.0], [0.0, -0.0086, -0.0253, 0.0038, 46.0], [1.0, 0.0073, -0.0213, 0.0334, 32.0], [2.0, -0.0014, -0.0104, 0.0059, 19.0], [3.0, -0.0023, -0.0151, 0.0062, 11.0]], "Loss specific: Triangle|up": [[-4.0, -0.0002, -0.0064, 0.0044, 15.0], [-3.0, -0.0055, -0.0189, 0.0026, 26.0], [-2.0, -0.0007, -0.0134, 0.0094, 29.0], [0.0, 0.0009, -0.0073, 0.0093, 74.0], [1.0, 0.0045, -0.0017, 0.0123, 51.0], [2.0, 0.0033, -0.0095, 0.0167, 30.0], [3.0, -0.0032, -0.022, 0.0068, 16.0]], "Submission loss (got finished)|down": [[-4.0, 0.0421, -0.0024, 0.1229, 4.0], [-3.0, 0.069, 0.0057, 0.135, 8.0], [-2.0, -0.0186, -0.12, 0.0463, 11.0], [0.0, -0.013, -0.0716, 0.0346, 46.0], [1.0, -0.0076, -0.0765, 0.0521, 32.0], [2.0, -0.0565, -0.1542, 0.0119, 19.0], [3.0, -0.0813, -0.2316, 0.0151, 11.0]], "Submission loss (got finished)|up": [[-4.0, -0.0074, -0.079, 0.0653, 15.0], [-3.0, 0.0284, -0.0147, 0.0735, 26.0], [-2.0, -0.0275, -0.0725, 0.0219, 29.0], [0.0, 0.0304, -0.0048, 0.0627, 74.0], [1.0, -0.0024, -0.0412, 0.0402, 51.0], [2.0, 0.0107, -0.0438, 0.0582, 30.0], [3.0, 0.0272, -0.0641, 0.1383, 16.0]], "Submission win (finished opponent)|down": [[-4.0, -0.0552, -0.3431, 0.2757, 4.0], [-3.0, -0.0147, -0.1864, 0.1247, 8.0], [-2.0, -0.1553, -0.268, -0.056, 11.0], [0.0, 0.0896, 0.024, 0.1695, 46.0], [1.0, 0.0803, 0.009, 0.1754, 32.0], [2.0, 0.1886, 0.0973, 0.3024, 19.0], [3.0, 0.1436, 0.0055, 0.2812, 11.0]], "Submission win (finished opponent)|up": [[-4.0, 0.0859, 0.0007, 0.1731, 15.0], [-3.0, 0.0813, 0.0084, 0.1667, 26.0], [-2.0, -0.031, -0.1359, 0.0545, 29.0], [0.0, -0.0043, -0.0526, 0.0403, 74.0], [1.0, 0.0653, -0.0079, 0.122, 51.0], [2.0, 0.0119, -0.0772, 0.0874, 30.0], [3.0, 0.0309, -0.0812, 0.1367, 16.0]], "Win family: Arm lock|down": [[-4.0, 0.0609, -0.0511, 0.1592, 4.0], [-3.0, 0.0385, -0.0265, 0.1146, 8.0], [-2.0, -0.0093, -0.133, 0.075, 11.0], [0.0, 0.0126, -0.0228, 0.0481, 46.0], [1.0, -0.0022, -0.0528, 0.0547, 32.0], [2.0, 0.0534, -0.0157, 0.1554, 19.0], [3.0, -0.0158, -0.0795, 0.0687, 11.0]], "Win family: Arm lock|up": [[-4.0, 0.0754, -0.0003, 0.1543, 15.0], [-3.0, 0.0521, 0.008, 0.1053, 26.0], [-2.0, -0.0085, -0.0546, 0.0258, 29.0], [0.0, 0.0083, -0.0258, 0.0421, 74.0], [1.0, 0.0077, -0.0344, 0.0453, 51.0], [2.0, -0.0462, -0.0942, -0.0029, 30.0], [3.0, -0.0393, -0.1101, 0.0211, 16.0]], "Win family: Choke|down": [[-4.0, -0.0537, -0.2063, 0.1202, 4.0], [-3.0, -0.0105, -0.1482, 0.088, 8.0], [-2.0, -0.0617, -0.1143, -0.0167, 11.0], [0.0, 0.0625, 0.0126, 0.1235, 46.0], [1.0, 0.0542, -0.0119, 0.1264, 32.0], [2.0, 0.1269, 0.0702, 0.1835, 19.0], [3.0, 0.1172, 0.0444, 0.1778, 11.0]], "Win family: Choke|up": [[-4.0, 0.0328, -0.0858, 0.1548, 15.0], [-3.0, 0.0112, -0.0685, 0.0923, 26.0], [-2.0, -0.045, -0.1347, 0.0358, 29.0], [0.0, -0.0111, -0.0573, 0.0313, 74.0], [1.0, 0.0353, -0.037, 0.1005, 51.0], [2.0, 0.0216, -0.051, 0.0855, 30.0], [3.0, 0.02, -0.0879, 0.1273, 16.0]], "Win family: Leg lock|down": [[-4.0, -0.0476, -0.1293, 0.0061, 4.0], [-3.0, -0.0282, -0.1083, 0.0481, 8.0], [-2.0, -0.0642, -0.1242, -0.0032, 11.0], [0.0, 0.0185, -0.0149, 0.0514, 46.0], [1.0, 0.0211, -0.0143, 0.0605, 32.0], [2.0, 0.0149, -0.0147, 0.0438, 19.0], [3.0, 0.0462, -0.0269, 0.1058, 11.0]], "Win family: Leg lock|up": [[-4.0, -0.024, -0.1404, 0.0557, 15.0], [-3.0, 0.0209, -0.0342, 0.075, 26.0], [-2.0, 0.0143, -0.0287, 0.071, 29.0], [0.0, -0.0063, -0.0339, 0.0224, 74.0], [1.0, 0.0108, -0.0307, 0.0557, 51.0], [2.0, 0.022, -0.0246, 0.0629, 30.0], [3.0, 0.0497, -0.03, 0.151, 16.0]], "Win specific: Armbar|down": [[-4.0, 0.0528, -0.0136, 0.1825, 4.0], [-3.0, 0.0166, -0.0064, 0.045, 8.0], [-2.0, -0.0257, -0.1394, 0.0451, 11.0], [0.0, 0.0127, -0.0214, 0.0468, 46.0], [1.0, -0.0078, -0.0595, 0.0426, 32.0], [2.0, 0.0217, -0.0472, 0.1098, 19.0], [3.0, -0.0409, -0.0941, 0.0374, 11.0]], "Win specific: Armbar|up": [[-4.0, 0.0277, -0.0487, 0.1021, 15.0], [-3.0, 0.0193, -0.021, 0.0768, 26.0], [-2.0, 0.0097, -0.0393, 0.0477, 29.0], [0.0, 0.0088, -0.0168, 0.033, 74.0], [1.0, -0.0042, -0.0349, 0.0245, 51.0], [2.0, -0.0225, -0.0617, 0.0095, 30.0], [3.0, -0.0233, -0.0873, 0.0224, 16.0]], "Win specific: Guillotine|down": [[-4.0, -0.005, -0.0142, 0.0008, 4.0], [-3.0, -0.002, -0.0065, 0.0007, 8.0], [-2.0, -0.0004, -0.0028, 0.0017, 11.0], [0.0, 0.006, -0.0039, 0.0193, 46.0], [1.0, 0.0035, -0.0015, 0.0167, 32.0], [2.0, -0.0097, -0.0378, 0.0078, 19.0], [3.0, -0.0005, -0.0161, 0.0142, 11.0]], "Win specific: Guillotine|up": [[-4.0, -0.0016, -0.0103, 0.006, 15.0], [-3.0, 0.0015, -0.0033, 0.0087, 26.0], [-2.0, -0.0093, -0.0296, 0.001, 29.0], [0.0, 0.0023, -0.0065, 0.0112, 74.0], [1.0, 0.0035, -0.0089, 0.0176, 51.0], [2.0, 0.0089, -0.0016, 0.0218, 30.0], [3.0, 0.0022, -0.007, 0.0162, 16.0]], "Win specific: Heel hook|down": [[-4.0, 0.006, -0.0064, 0.0288, 4.0], [-3.0, 0.0014, -0.0042, 0.0092, 8.0], [-2.0, 0.0019, -0.0067, 0.0109, 11.0], [0.0, 0.0025, -0.007, 0.0132, 46.0], [1.0, -0.0034, -0.0113, 0.0029, 32.0], [2.0, -0.0036, -0.0158, 0.0057, 19.0], [3.0, 0.0107, -0.0086, 0.0292, 11.0]], "Win specific: Heel hook|up": [[-4.0, -0.0365, -0.121, 0.0084, 15.0], [-3.0, 0.0192, -0.0442, 0.0876, 26.0], [-2.0, 0.0248, -0.0026, 0.0812, 29.0], [0.0, -0.0105, -0.0233, -0.0001, 74.0], [1.0, -0.0157, -0.0382, -0.0005, 51.0], [2.0, 0.0007, -0.0129, 0.0185, 30.0], [3.0, 0.0235, -0.0171, 0.1035, 16.0]], "Win specific: Kneebar|down": [[-4.0, -0.0052, -0.0176, 0.009, 4.0], [-3.0, -0.0053, -0.0178, 0.0036, 8.0], [-2.0, -0.0041, -0.0112, 0.0018, 11.0], [0.0, 0.0031, -0.0055, 0.0158, 46.0], [1.0, 0.0031, -0.0194, 0.033, 32.0], [2.0, -0.01, -0.0354, 0.0085, 19.0], [3.0, -0.0198, -0.0668, 0.0115, 11.0]], "Win specific: Kneebar|up": [[-4.0, 0.0297, -0.0037, 0.0708, 15.0], [-3.0, 0.003, -0.0102, 0.0139, 26.0], [-2.0, 0.001, -0.0118, 0.0156, 29.0], [0.0, 0.0059, -0.0036, 0.0172, 74.0], [1.0, 0.0024, -0.0062, 0.0114, 51.0], [2.0, 0.0182, 0.0028, 0.0363, 30.0], [3.0, 0.0391, 0.0035, 0.1022, 16.0]], "Win specific: Rear naked choke|down": [[-4.0, 0.0171, -0.0693, 0.0922, 4.0], [-3.0, 0.0355, -0.1017, 0.1409, 8.0], [-2.0, -0.0544, -0.116, -0.0013, 11.0], [0.0, 0.0011, -0.0339, 0.0342, 46.0], [1.0, 0.0134, -0.0235, 0.0484, 32.0], [2.0, 0.0597, 0.0087, 0.1129, 19.0], [3.0, 0.0325, -0.0278, 0.0888, 11.0]], "Win specific: Rear naked choke|up": [[-4.0, 0.0044, -0.0782, 0.0853, 15.0], [-3.0, 0.0427, -0.01, 0.1022, 26.0], [-2.0, 0.0292, -0.0319, 0.0829, 29.0], [0.0, 0.0041, -0.024, 0.0306, 74.0], [1.0, 0.0176, -0.0264, 0.0557, 51.0], [2.0, 0.0287, -0.0115, 0.0657, 30.0], [3.0, 0.006, -0.0586, 0.0572, 16.0]], "Win specific: Straight ankle lock|down": [[-4.0, -0.0496, -0.1203, 0.0, 4.0], [-3.0, 0.0058, -0.0389, 0.0655, 8.0], [-2.0, -0.0459, -0.0834, -0.0059, 11.0], [0.0, 0.0075, -0.0118, 0.0271, 46.0], [1.0, 0.0072, -0.0119, 0.0284, 32.0], [2.0, 0.0193, -0.0033, 0.0424, 19.0], [3.0, 0.0318, -0.0061, 0.0753, 11.0]], "Win specific: Straight ankle lock|up": [[-4.0, -0.0034, -0.0387, 0.0374, 15.0], [-3.0, -0.0181, -0.0394, 0.0007, 26.0], [-2.0, -0.0159, -0.0402, 0.0032, 29.0], [0.0, 0.0004, -0.014, 0.0164, 74.0], [1.0, 0.0018, -0.0189, 0.0238, 51.0], [2.0, 0.0003, -0.0284, 0.0253, 30.0], [3.0, -0.0208, -0.0525, 0.0083, 16.0]], "Win specific: Toe hold|down": [[-4.0, 0.0007, -0.0099, 0.011, 4.0], [-3.0, -0.0294, -0.0841, 0.0007, 8.0], [-2.0, -0.0159, -0.0562, 0.0269, 11.0], [0.0, 0.0041, -0.0135, 0.02, 46.0], [1.0, 0.0116, -0.0021, 0.0311, 32.0], [2.0, 0.0079, -0.0004, 0.0179, 19.0], [3.0, 0.02, 0.0009, 0.0398, 11.0]], "Win specific: Toe hold|up": [[-4.0, -0.0137, -0.0375, 0.0016, 15.0], [-3.0, 0.0175, -0.0048, 0.0399, 26.0], [-2.0, 0.0058, -0.0046, 0.0187, 29.0], [0.0, 0.001, -0.0077, 0.011, 74.0], [1.0, 0.0249, 0.0029, 0.0546, 51.0], [2.0, 0.0025, -0.0185, 0.0156, 30.0], [3.0, 0.0096, -0.0038, 0.0261, 16.0]], "Win specific: Triangle|down": [[-4.0, -0.049, -0.1539, 0.0054, 4.0], [-3.0, -0.0223, -0.0686, 0.0089, 8.0], [-2.0, -0.0076, -0.0472, 0.0271, 11.0], [0.0, 0.0124, -0.0052, 0.0336, 46.0], [1.0, 0.0147, -0.0073, 0.0419, 32.0], [2.0, 0.0149, -0.0001, 0.0323, 19.0], [3.0, 0.0207, 0.0027, 0.0454, 11.0]], "Win specific: Triangle|up": [[-4.0, 0.0287, -0.0186, 0.1182, 15.0], [-3.0, -0.0028, -0.0322, 0.0305, 26.0], [-2.0, -0.0145, -0.0504, 0.0203, 29.0], [0.0, -0.0108, -0.0318, 0.0079, 74.0], [1.0, -0.0022, -0.0292, 0.0248, 51.0], [2.0, -0.0153, -0.0534, 0.0175, 30.0], [3.0, -0.0581, -0.1152, 0.005, 16.0]]}, "robust": [[3, 5, 4, 86, 51, 233, "Any submission", 0.0411, 0.0867, -0.0228, 0.0224, 0.0639, 0.0246], [3, 5, 4, 86, 51, 233, "Submission win (finished opponent)", 0.0268, 0.1101, -0.0417, 0.021, 0.0684, 0.0225], [3, 5, 4, 86, 51, 233, "Submission loss (got finished)", 0.0143, -0.0234, 0.0189, 0.0182, -0.0046, 0.019], [3, 5, 4, 86, 51, 233, "Win family: Leg lock", 0.0112, 0.0182, -0.0035, 0.0099, 0.0147, 0.0114], [3, 5, 4, 86, 51, 233, "Loss family: Leg lock", 0.0107, 0.0158, -0.0025, 0.0039, 0.0133, 0.0047], [3, 5, 4, 86, 51, 233, "Win family: Choke", 0.009, 0.0792, -0.0351, 0.0161, 0.0441, 0.0183], [3, 5, 4, 86, 51, 233, "Loss family: Choke", 0.0024, -0.0109, 0.0067, 0.0093, -0.0043, 0.0098], [2, 5, 4, 90, 54, 220, "Any submission", 0.042, 0.0706, -0.0143, 0.0238, 0.0563, 0.0263], [2, 5, 4, 90, 54, 220, "Submission win (finished opponent)", 0.0243, 0.1035, -0.0396, 0.02, 0.0639, 0.0232], [2, 5, 4, 90, 54, 220, "Submission loss (got finished)", 0.0177, -0.0329, 0.0253, 0.018, -0.0076, 0.0188], [2, 5, 4, 90, 54, 220, "Win family: Leg lock", 0.0105, 0.0286, -0.0091, 0.0107, 0.0195, 0.0125], [2, 5, 4, 90, 54, 220, "Loss family: Leg lock", 0.0084, -0.0003, 0.0043, 0.0102, 0.0041, 0.0102], [2, 5, 4, 90, 54, 220, "Win family: Choke", 0.0083, 0.067, -0.0293, 0.0189, 0.0376, 0.0207], [2, 5, 4, 90, 54, 220, "Loss family: Choke", 0.0097, -0.0087, 0.0092, 0.0089, 0.0005, 0.0092], [5, 5, 4, 84, 37, 230, "Any submission", 0.0181, 0.0462, -0.0141, 0.0217, 0.0322, 0.024], [5, 5, 4, 84, 37, 230, "Submission win (finished opponent)", 0.0054, 0.0717, -0.0331, 0.0215, 0.0386, 0.0234], [5, 5, 4, 84, 37, 230, "Submission loss (got finished)", 0.0127, -0.0255, 0.0191, 0.0138, -0.0064, 0.0145], [5, 5, 4, 84, 37, 230, "Win family: Leg lock", 0.0057, 0.023, -0.0087, 0.0102, 0.0144, 0.0118], [5, 5, 4, 84, 37, 230, "Loss family: Leg lock", 0.0094, 0.0155, -0.003, 0.0049, 0.0124, 0.0053], [5, 5, 4, 84, 37, 230, "Win family: Choke", -0.0085, 0.0607, -0.0346, 0.0169, 0.0261, 0.0189], [5, 5, 4, 84, 37, 230, "Loss family: Choke", 0.0005, -0.0352, 0.0179, 0.0106, -0.0173, 0.0108], [3, 4, 3, 96, 60, 204, "Any submission", 0.0434, 0.0668, -0.0117, 0.0223, 0.0551, 0.0245], [3, 4, 3, 96, 60, 204, "Submission win (finished opponent)", 0.0395, 0.1019, -0.0312, 0.0207, 0.0707, 0.0221], [3, 4, 3, 96, 60, 204, "Submission loss (got finished)", 0.0039, -0.0351, 0.0195, 0.0178, -0.0156, 0.0187], [3, 4, 3, 96, 60, 204, "Win family: Leg lock", 0.015, 0.0179, -0.0015, 0.0087, 0.0164, 0.0107], [3, 4, 3, 96, 60, 204, "Loss family: Leg lock", 0.0081, 0.0128, -0.0024, 0.0042, 0.0104, 0.0049], [3, 4, 3, 96, 60, 204, "Win family: Choke", 0.0122, 0.0686, -0.0282, 0.0145, 0.0404, 0.0168], [3, 4, 3, 96, 60, 204, "Loss family: Choke", 0.0012, -0.0213, 0.0113, 0.0082, -0.01, 0.009], [3, 6, 4, 65, 41, 233, "Any submission", 0.0324, 0.1131, -0.0404, 0.0241, 0.0727, 0.0271], [3, 6, 4, 65, 41, 233, "Submission win (finished opponent)", 0.0128, 0.1354, -0.0613, 0.0231, 0.0741, 0.0254], [3, 6, 4, 65, 41, 233, "Submission loss (got finished)", 0.0195, -0.0223, 0.0209, 0.0196, -0.0014, 0.021], [3, 6, 4, 65, 41, 233, "Win family: Leg lock", 0.0056, 0.024, -0.0092, 0.0104, 0.0148, 0.0117], [3, 6, 4, 65, 41, 233, "Loss family: Leg lock", 0.0129, 0.0158, -0.0014, 0.004, 0.0144, 0.0048], [3, 6, 4, 65, 41, 233, "Win family: Choke", -0.0086, 0.0865, -0.0476, 0.0174, 0.039, 0.0199], [3, 6, 4, 65, 41, 233, "Loss family: Choke", 0.0023, -0.0039, 0.0031, 0.0095, -0.0008, 0.0095]], "specs": [["Strict (original)", "Any submission", 53, 28, 0.0031, -0.042, 0.0458, 0.0462, -0.0038, 0.0974], ["Strict (original)", "Submission win (finished opponent)", 53, 28, -0.0345, -0.0862, 0.0149, 0.0494, -0.0038, 0.1022], ["Strict (original)", "Submission loss (got finished)", 53, 28, 0.0375, -0.0069, 0.0853, -0.0032, -0.0502, 0.04], ["Strict (original)", "Win family: Leg lock", 53, 28, -0.011, -0.0296, 0.0104, 0.0316, 0.0092, 0.0527], ["Strict (original)", "Loss family: Leg lock", 53, 28, -0.0082, -0.0232, 0.0067, 0.0138, -0.0024, 0.0294], ["Strict (original)", "Win family: Choke", 53, 28, -0.0371, -0.0768, 0.0019, 0.0134, -0.0275, 0.0553], ["Strict (original)", "Loss family: Choke", 53, 28, 0.0246, -0.0073, 0.0594, -0.0122, -0.0469, 0.0167], ["+ first moves", "Any submission", 86, 51, -0.0212, -0.0669, 0.0205, 0.0586, 0.011, 0.1068], ["+ first moves", "Submission win (finished opponent)", 86, 51, -0.0407, -0.0859, -0.0045, 0.0651, 0.0242, 0.1092], ["+ first moves", "Submission loss (got finished)", 86, 51, 0.0195, -0.0102, 0.0622, -0.0065, -0.0504, 0.0247], ["+ first moves", "Win family: Leg lock", 86, 51, -0.0032, -0.0237, 0.0159, 0.0128, -0.0076, 0.0343], ["+ first moves", "Loss family: Leg lock", 86, 51, -0.0027, -0.0109, 0.0048, 0.0133, 0.0049, 0.0231], ["+ first moves", "Win family: Choke", 86, 51, -0.035, -0.068, -0.0053, 0.0446, 0.0094, 0.0809], ["+ first moves", "Loss family: Choke", 86, 51, 0.0072, -0.0105, 0.0265, -0.0051, -0.0255, 0.013], ["+ not-yet controls", "Any submission", 53, 28, 0.0029, -0.041, 0.0466, 0.0477, -0.0034, 0.0989], ["+ not-yet controls", "Submission win (finished opponent)", 53, 28, -0.0346, -0.0866, 0.015, 0.0504, -0.0025, 0.1028], ["+ not-yet controls", "Submission loss (got finished)", 53, 28, 0.0375, -0.0069, 0.0853, -0.0026, -0.0499, 0.0405], ["+ not-yet controls", "Win family: Leg lock", 53, 28, -0.0114, -0.0297, 0.0099, 0.0331, 0.0102, 0.0543], ["+ not-yet controls", "Loss family: Leg lock", 53, 28, -0.0078, -0.0232, 0.0073, 0.0137, -0.0025, 0.0292], ["+ not-yet controls", "Win family: Choke", 53, 28, -0.0363, -0.0763, 0.0031, 0.0125, -0.0287, 0.0539], ["+ not-yet controls", "Loss family: Choke", 53, 28, 0.0244, -0.0077, 0.0597, -0.012, -0.0472, 0.0169], ["Both (new main)", "Any submission", 86, 51, -0.0228, -0.0662, 0.0183, 0.0639, 0.0162, 0.1113], ["Both (new main)", "Submission win (finished opponent)", 86, 51, -0.0417, -0.0854, -0.0067, 0.0684, 0.0269, 0.1128], ["Both (new main)", "Submission loss (got finished)", 86, 51, 0.0189, -0.0101, 0.0608, -0.0046, -0.0495, 0.0264], ["Both (new main)", "Win family: Leg lock", 86, 51, -0.0035, -0.0231, 0.0152, 0.0147, -0.006, 0.038], ["Both (new main)", "Loss family: Leg lock", 86, 51, -0.0025, -0.0106, 0.0049, 0.0133, 0.0046, 0.0227], ["Both (new main)", "Win family: Choke", 86, 51, -0.0351, -0.068, -0.0054, 0.0441, 0.0083, 0.082], ["Both (new main)", "Loss family: Choke", 86, 51, 0.0067, -0.0111, 0.0255, -0.0043, -0.0247, 0.0141]], "placebo": [["vs year before \u00b7 unweighted", 84, 11, 84, 7, 0, 2], ["vs year before \u00b7 weighted", 84, 13, 84, 5, 0, 3], ["vs last clean year \u00b7 unweighted", 72, 6, 72, 6, 1, 3], ["vs last clean year \u00b7 weighted (current)", 72, 8, 72, 5, 2, 3]]};
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const pp = (x,d=1) => Math.abs(x*100)<0.05 ? '0.0' : (x>=0?'+':'−')+Math.abs(x*100).toFixed(d);
+const R = D.res, WIN='Submission win (finished opponent)', LOSS='Submission loss (got finished)';
+const civ1=(v,lo,hi)=>`${pp(v)} points (${pp(lo)} to ${pp(hi)})`;
+const set=(id,t)=>{document.getElementById(id).textContent=t};
+const cw=R[WIN].c, cl=R[LOSS].c;
+set('b-ww',pp(cw[0])); set('b-ww-s',`points, 95% range ${pp(cw[1])} to ${pp(cw[2])}`);
+set('b-lw',pp(cl[0])); set('b-lw-s',`points, 95% range ${pp(cl[1])} to ${pp(cl[2])}`);
+set('b-base',`${(R[WIN].up[6]*100).toFixed(0)}% / ${(R[LOSS].up[6]*100).toFixed(1)}%`);
+set('t-wbase',(R[WIN].up[6]*100).toFixed(0)+'%'); set('t-lbase',(R[LOSS].up[6]*100).toFixed(1)+'%');
+set('t-wc',civ1(cw[3],cw[4],cw[5])); set('t-ww',civ1(cw[0],cw[1],cw[2]));
+const cc=R['Win family: Choke'].c; set('t-cw',civ1(cc[0],cc[1],cc[2]));
+set('t-lw',civ1(cl[0],cl[1],cl[2]));
+const ll=R['Loss family: Leg lock'].c; set('t-ll',civ1(ll[3],ll[4],ll[5]));
+set('cap-win',`Finishing opponents. Moved up ${pp(R[WIN].up[0])}pp, moved down ${pp(R[WIN].down[0])}pp after the move.`);
+set('cap-loss',`Getting finished. Moved up ${pp(R[LOSS].up[0])}pp, moved down ${pp(R[LOSS].down[0])}pp after the move.`);
+
+const NS='http://www.w3.org/2000/svg';
+function el(tag,attrs,parent,text){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;parent.appendChild(e);return e}
+function eventChart(svg, series, opts){
+  const W=+svg.viewBox.baseVal.width, H=+svg.viewBox.baseVal.height;
+  const m={l:52,r:10,t:opts.title?34:14,b:54};
+  const xs=[-4,-3,-2,-1,0,1,2,3]; const lim=opts.lim;
+  const x=e=>m.l+(e-xs[0]+0.5)/(xs.length)*(W-m.l-m.r);
+  const y=v=>m.t+(lim-v)/(2*lim)*(H-m.t-m.b);
+  if(opts.title) el('text',{x:0,y:18,class:'title'},svg,opts.title);
+  opts.ticks.forEach(t=>{el('line',{x1:m.l,x2:W-m.r,y1:y(t),y2:y(t),stroke:css('--rule'),'stroke-width':t===0?0:1},svg);
+    el('text',{x:m.l-8,y:y(t)+4,'text-anchor':'end'},svg,(t>0?'+':t<0?'−':'')+Math.abs(Math.round(t*100))+'pp')});
+  el('line',{x1:m.l,x2:W-m.r,y1:y(0),y2:y(0),stroke:css('--zero'),'stroke-width':1.2},svg);
+  const xd=(x(-1)+x(0))/2; el('line',{x1:xd,x2:xd,y1:m.t,y2:H-m.b,stroke:css('--zero'),'stroke-dasharray':'4 4'},svg);
+  const clip=v=>Math.max(-lim,Math.min(lim,v));
+  const off=(W-m.l-m.r)/xs.length*0.1;
+  series.forEach((S,i)=>{
+    const c=css(S.color), dx=(i-(series.length-1)/2)*2*off, X=e=>x(e)+dx;
+    S.rows.forEach(r=>el('line',{x1:X(r[0]),x2:X(r[0]),y1:y(clip(r[2])),y2:y(clip(r[3])),stroke:c,'stroke-width':2,opacity:.55},svg));
+    const pre=S.rows.filter(r=>r[0]<0), post=S.rows.filter(r=>r[0]>=0);
+    [pre,post].forEach(seg=>{if(seg.length>1) el('polyline',{points:seg.map(r=>`${X(r[0])},${y(clip(r[1]))}`).join(' '),fill:'none',stroke:c,'stroke-width':2},svg)});
+    S.rows.forEach(r=>el('circle',{cx:X(r[0]),cy:y(clip(r[1])),r:4.5,fill:r[0]<0?css('--surface'):c,stroke:c,'stroke-width':2},svg));
+  });
+  xs.forEach(e=>{el('text',{x:x(e),y:H-m.b+18,'text-anchor':'middle'},svg,e===0?'0':(e>0?'+':'−')+Math.abs(e));
+    const ns=series.map(S=>{const r=S.rows.find(r=>r[0]===e);return r?r[4]:'–'}).join('/');
+    el('text',{x:x(e),y:H-m.b+34,'text-anchor':'middle',style:'font-size:9.5px'},svg,ns);});
+  el('text',{x:(m.l+W-m.r)/2,y:H-3,'text-anchor':'middle'},svg,'years relative to changing class');
+}
+function drawAll(){
+  [['es-win',WIN,'Finishing opponents'],['es-loss',LOSS,'Getting finished']].forEach(([id,k,t])=>{
+    const s=document.getElementById(id); s.innerHTML='';
+    eventChart(s,[{rows:D.event[k+'|up'],color:'--accent'},{rows:D.event[k+'|down'],color:'--down'}],{lim:0.3,ticks:[-0.3,-0.15,0,0.15,0.3],title:t});
+  });
+}
+const sig=(lo,hi)=>lo>0||hi<0;
+const b=(lo,hi,t)=>sig(lo,hi)?`<strong>${t}</strong>`:t;
+const civ=(v,lo,hi)=>`${pp(v)}<br><span class="muted" style="font-size:.8em">[${pp(lo)}, ${pp(hi)}]</span>`;
+function dumb(u,d){
+  const W=150,H=30,lim=0.16,x=v=>W/2+Math.max(-lim,Math.min(lim,v))/lim*(W/2-6);
+  const row=(o,y,c)=>`<line x1="${x(o[1])}" x2="${x(o[2])}" y1="${y}" y2="${y}" stroke="${c}" stroke-width="2" opacity=".7"/><circle cx="${x(o[0])}" cy="${y}" r="4" fill="${c}"/>`;
+  return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" aria-hidden="true"><line x1="${W/2}" x2="${W/2}" y1="0" y2="${H}" stroke="var(--zero)"/>${row(u,9,'var(--accent)')}${row(d,21,'var(--down)')}</svg>`;
+}
+const SPEC=['Rear naked choke','Armbar','Triangle','Guillotine','Heel hook','Kneebar','Toe hold','Straight ankle lock'];
+function fill(id, side, overall){
+  const groups=[['Overall',[[overall,'Any submission']]],
+    ['Family',['Choke','Arm lock','Leg lock'].map(f=>[`${side} family: ${f}`,f+'s'])],
+    ['Specific',SPEC.map(s=>[`${side} specific: ${s}`,s])]];
+  const tb=document.querySelector(`#${id} tbody`);
+  groups.forEach(([g,rows])=>{
+    tb.insertAdjacentHTML('beforeend',`<tr class="group"><td colspan="8">${g}</td></tr>`);
+    rows.forEach(([k,label])=>{const o=R[k],u=o.up,d=o.down,c=o.c;
+      const fails=[sig(u[4],u[5])?'up':null,sig(d[4],d[5])?'down':null].filter(Boolean);
+      const pl=fails.length?`<span class="flag">fails: ${fails.join(', ')}</span>`:'<span class="muted">ok</span>';
+      tb.insertAdjacentHTML('beforeend',`<tr><td>${label}</td><td>${(u[6]*100).toFixed(1)}%</td><td class="forest">${dumb(u,d)}</td><td>${b(u[1],u[2],pp(u[0]))}</td><td>${b(d[1],d[2],pp(d[0]))}</td><td>${b(c[1],c[2],civ(c[0],c[1],c[2]))}</td><td>${b(c[4],c[5],civ(c[3],c[4],c[5]))}</td><td>${pl}</td></tr>`)});
+  });
+}
+fill('t-win','Win',WIN); fill('t-loss','Loss',LOSS);
+const pt=document.querySelector('#plac tbody');
+D.placebo.forEach(r=>pt.insertAdjacentHTML('beforeend',`<tr><td>${r[0]}</td><td>${r[2]} of ${r[1]} <span class="muted">(chance ~${(r[1]*.05).toFixed(1)})</span></td><td>${r[4]} of ${r[3]} <span class="muted">(chance ~${(r[3]*.05).toFixed(1)})</span></td><td>${r[5]} / ${r[6]} <span class="muted">of 24 each</span></td></tr>`));
+const sp={}; D.specs.forEach(r=>{(sp[r[0]]=sp[r[0]]||{})[r[1]]=r;});
+const st=document.querySelector('#specs tbody');
+Object.entries(sp).forEach(([name,o])=>{const w=o[WIN],l=o[LOSS],c=o['Win family: Choke'],ll=o['Loss family: Leg lock'];
+  const cell=(v,lo,hi)=>b(lo,hi,civ(v,lo,hi));
+  st.insertAdjacentHTML('beforeend',`<tr><td>${name}</td><td>${w[2]} / ${w[3]}</td><td>${cell(w[4],w[5],w[6])}</td><td>${cell(w[7],w[8],w[9])}</td><td>${cell(c[4],c[5],c[6])}</td><td>${cell(l[4],l[5],l[6])}</td><td>${cell(ll[7],ll[8],ll[9])}</td></tr>`)});
+const rb=document.querySelector('#rob tbody');
+const specs={}; D.robust.forEach(r=>{const k=r.slice(0,3).join('/'); (specs[k]=specs[k]||{meta:r})[r[6]]=r;});
+const fmt=(v,se)=>{const t=`${pp(v)} <span class="muted">(${(se*100).toFixed(1)})</span>`; return Math.abs(v)>=1.96*se?`<strong>${t}</strong>`:t};
+Object.values(specs).forEach((s,i)=>{const m=s.meta,w=s[WIN],l=s[LOSS],ll=s['Loss family: Leg lock'];
+  rb.insertAdjacentHTML('beforeend',`<tr><td>${m[0]}${i===0?' (main)':''}</td><td>${m[1]} / ${m[2]}</td><td>${m[3]} / ${m[4]} / ${m[5]}</td><td>${fmt(w[9],w[10])}</td><td>${fmt(w[11],w[12])}</td><td>${fmt(l[9],l[10])}</td><td>${fmt(ll[11],ll[12])}</td></tr>`)});
+drawAll();
+try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',drawAll)}catch(e){}
+new MutationObserver(drawAll).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+</script>
+
+</body>
+</html>
