@@ -6,9 +6,9 @@ A staggered difference-in-differences study of Brazilian jiu-jitsu competitors w
 
 ## Key findings
 
-- **Changing class in either direction goes with more finishes.** Competitors who moved up and competitors who moved down both finished opponents more often afterwards, compared with competitors who hadn't moved. That shared rise is +6.8 percentage points (95% CI +2.7 to +11.3). Because it appears in both directions, it points to something that comes with changing class (career stage, preparation, a new division, different events) rather than to body weight itself.
-- **Movers down finish more than movers up.** Movers down finish 11.0 points more often after the move, movers up 2.7. Half the gap, the *direction effect*, is −4.2 points (−8.5 to −0.7), consistent with being the relatively bigger competitor making finishes easier. Most of it is chokes. This is the least stable result: it's clearly distinguishable from zero at only 3 of 5 data-cleaning thresholds, and movers down were already finishing more in the year before they moved.
-- **Getting finished shows no clear direction effect** (+1.9 points, −1.0 to +6.1). The exception is leg locks: competitors get caught in leg locks more after changing class in either direction (+1.3 points on a base of about 2%), which suggests a shift toward leg-lock-friendly events (no-gi or submission-only).
+- **Changing class in either direction goes with more submissions.** Competitors who moved up and competitors who moved down both finished opponents more often afterwards, compared with competitors who hadn't moved. That shared rise is +6.8 percentage points (95% CI +2.7 to +11.3). Because it appears in both directions, it points to something that comes with changing class (career stage, preparation, a new division, different events) rather than to body weight itself.
+- **Movers down submit their opponent more than movers up.** Movers down finish 11.0 points more often after the move, movers up 2.7. Half the gap, the *direction effect*, is −4.2 points (−8.5 to −0.7), consistent with being the relatively bigger competitor making finishes easier. Most of it is chokes. This is the least stable result: it's clearly distinguishable from zero at only 3 of 5 data-cleaning thresholds, and movers down were already finishing more in the year before they moved.
+- **Getting submitted shows no clear direction effect** (+1.9 points, −1.0 to +6.1). The exception is leg locks: competitors get caught in leg locks more after changing class in either direction (+1.3 points on a base of about 2%), which suggests a shift toward leg-lock-friendly events (no-gi or submission-only).
 - **No detectable effect of weight class on overall submission frequency.** Effects larger than about 7 points can be ruled out.
 
 ![Event study: finishing opponents, movers up vs movers down](results/event_submission_win_finished_opponent.png)
@@ -61,11 +61,12 @@ The project-specific choices (match-count weighting, the placebo filter, not-yet
 
 ## Limitations
 
-- **Small samples.** Submission losses are rare (under 8% of matches; under 2% for any single submission), so loss estimates for specific submissions are imprecise.
-- **Changing class isn't random.** Comparing changes removes fixed differences between competitors, but not trends that line up with the move. Movers down were already on an upswing just before moving.
-- **The up/down split assumes the same career effect for both groups.**
+- **Small samples and sparse data.** Submission losses are rare (under 8% of matches; under 2% for any single submission), so loss estimates for specific submissions are imprecise. Additionally, the overall data is sparse. The method used severely limits the amount of data that actually contributes, particularly for the more specific questions I am asking, such as rates for specific submissions. 
+- **Changing class isn't random.** Comparing changes removes fixed differences between competitors, but not trends that line up with the move. Movers down were already on an upswing just before moving. The main issue here is that changing classes is a premeditated choice made by competitors for a variety of reasons. 
+- **The up/down split assumes the same career effect for both groups.** Both a change up and a change down were assessed to minimize the effect of simply progressing in ones career showing up as a weight change effect, but using this as a control does assume that those moving up and moving down share similar career trends, which may not be true. 
 - **Gi and no-gi are mixed.** The data don't record them separately.
-- **Notable competitors only.** BJJ Heroes profiles notable competitors and records their own matches.
+- **No Rule-set control.** Rule-sets allowing and disallowing certain submissions are not recorded or accounted for in this analysis. These rule-sets vary between federation as well as experience level, so certain changes in the data may be noise from these restrictions. Particularly, certain leg-locks such as heel hooks are restricted depending on experience level and go vs nogi as well as between federations. 
+- **Notable competitors only.** BJJ Heroes profiles notable competitors and records their own matches. This analysis may be much different on average competitors/hobbyist as opposed to those competing at a focused and professional level. 
 
 ## Repository layout
 
